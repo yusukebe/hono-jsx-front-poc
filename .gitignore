@@ -1,4 +1,6 @@
 yarn.lock
+dist
+.wrangler
 
 # Logs
 logs

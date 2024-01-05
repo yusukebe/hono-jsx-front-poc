@@ -1,4 +1,4 @@
-import { Component } from '../src/front'
+import { Component } from '../src/hydration'
 
 export class Counter extends Component {
   count = 0
@@ -11,7 +11,7 @@ export class Counter extends Component {
   render() {
     return (
       <div>
-        <div>Counter: {this.count}</div>
+        <p>Counter: {this.count}</p>
         <button onClick={() => this.increment()}>Increment</button>
       </div>
     )
