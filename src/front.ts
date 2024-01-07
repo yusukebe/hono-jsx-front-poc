@@ -1,6 +1,4 @@
-import { Fragment, JSXNode, jsx as jsxFn } from 'hono/jsx'
-
-const COMPONENT_TAG_NAME = 'hono-component'
+import { JSXNode, Component as BaseComponent, jsx as jsxFn } from 'hono/jsx'
 
 const jsxNodeToHTMLElement = (jsxNode: JSXNode): HTMLElement => {
   const tagName = typeof jsxNode.tag === 'string' ? jsxNode.tag : 'fragment'
@@ -33,39 +31,17 @@ const jsxNodeToHTMLElement = (jsxNode: JSXNode): HTMLElement => {
   return element
 }
 
-const toHash = (str: string): string => {
-  let i = 0,
-    out = 11
-  while (i < str.length) {
-    out = (101 * out + str.charCodeAt(i++)) >>> 0
-  }
-  return 'component-' + out
-}
-
-const _render = async (c: Component) => {
-  const jsx = await c.render()
-  const hash = toHash(JSON.stringify(jsx))
-  const wrappedJSX = jsxFn(COMPONENT_TAG_NAME, { id: hash }, [jsx])
-  return wrappedJSX
-}
-
-export class Component extends JSXNode {
+export class Component extends BaseComponent {
   elements: HTMLElement[] = []
-  async render(): JSX.Element {
-    return Fragment({})
-  }
   async update() {
     const jsx = await this.render()
     // @ts-expect-error jsx will be JSXNode
-    const newElement = jsxNodeToHTMLElement(jsx)
+    const newElement = jsxNodeToHTMLElement(jsx).children[0]
     const parent = this.elements[0].parentElement
     if (parent) {
       parent.replaceChild(newElement, this.elements[0])
       this.elements = [newElement]
     }
-  }
-  async toString() {
-    return await _render(this)
   }
 }
 
@@ -74,17 +50,11 @@ export const classToComponent = (c: any) => {
   return new Klass() as Component
 }
 
-export const renderComponent = (c: any) => {
-  const component = classToComponent(c)
-  return component.toString()
-}
-
 export const hydrate = async (c: any) => {
   const component = classToComponent(c)
-  const ele = await _render(component)
-  const id = ele.props['id']
-  const element = document.querySelector<HTMLElement>(`#${id}`)
   const jsx = await component.render()
-  element?.replaceChild(jsxNodeToHTMLElement(jsx), element.children[0])
+  const id = jsx.props['id']
+  const element = document.querySelector<HTMLElement>(`#${id}`)
+  element?.replaceChild(jsxNodeToHTMLElement(jsx).children[0], element.children[0])
   component.elements = element!.children as unknown as HTMLElement[]
 }

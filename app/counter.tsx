@@ -1,4 +1,4 @@
-import { Component } from '../src/hydration'
+import { Component } from '../src/front'
 
 export class Counter extends Component {
   count = 0

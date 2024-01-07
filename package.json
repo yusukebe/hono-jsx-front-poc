@@ -10,11 +10,17 @@
   },
   "devDependencies": {
     "@hono/vite-dev-server": "^0.3.4",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "wrangler": "^3.22.2"
   },
   "dependencies": {
-    "hono": "^3.11.12"
+    "@babel/generator": "^7.23.6",
+    "@babel/parser": "^7.23.6",
+    "@babel/traverse": "^7.23.7",
+    "@babel/types": "^7.23.6",
+    "hono": "./hono-3.12.0-class-componets.tgz"
   }
 }
