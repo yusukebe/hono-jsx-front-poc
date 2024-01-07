@@ -1,6 +1,7 @@
 yarn.lock
 dist
 .wrangler
+sandbox
 
 # Logs
 logs
