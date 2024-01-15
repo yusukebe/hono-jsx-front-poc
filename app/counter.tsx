@@ -1,19 +1,13 @@
-import { Component } from '../src/front'
+import { useState, use } from 'hono/jsx/hooks'
 
-export class Counter extends Component {
-  count = 0
-
-  increment() {
-    this.count++
-    this.update()
-  }
-
-  render() {
-    return (
-      <div>
-        <p>Counter: {this.count}</p>
-        <button onClick={() => this.increment()}>Increment</button>
-      </div>
-    )
-  }
+export default function Counter() {
+  const promise = new Promise((resolve) => setTimeout(resolve, 2000))
+  use(promise)
+  const [count, setCount] = useState(0)
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  )
 }

@@ -1,6 +1,7 @@
-import { Counter } from './counter'
-import { hydrate } from '../src/front'
+import Counter from './counter'
+import { render } from 'hono/jsx/dom'
 
 document.addEventListener('DOMContentLoaded', function () {
-  hydrate(<Counter />)
+  const target = document.getElementById('target')
+  render(<Counter />, target)
 })

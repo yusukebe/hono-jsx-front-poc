@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { Counter } from './counter'
+import Counter from './counter'
 
 const app = new Hono()
 
@@ -19,7 +19,7 @@ app.get(
         </head>
         <body>
           <h1>Hi</h1>
-          <div id="app">{children}</div>
+          <main>{children}</main>
         </body>
       </html>
     )
@@ -27,7 +27,11 @@ app.get(
 )
 
 app.get('/', (c) => {
-  return c.render(<Counter />)
+  return c.render(
+    <div id="target">
+      <Counter />
+    </div>
+  )
 })
 
 export default app

@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import devServer from '@hono/vite-dev-server'
-import componentTransformerPlugin from './src/vite-plugin'
 
 export default defineConfig(({ mode }) => {
   if (mode === 'client') {
@@ -15,8 +14,7 @@ export default defineConfig(({ mode }) => {
         },
         emptyOutDir: false,
         copyPublicDir: false
-      },
-      plugins: [componentTransformerPlugin()]
+      }
     }
   } else {
     return {
@@ -30,8 +28,7 @@ export default defineConfig(({ mode }) => {
       plugins: [
         devServer({
           entry: './app/server.tsx'
-        }),
-        componentTransformerPlugin()
+        })
       ]
     }
   }
