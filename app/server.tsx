@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { Suspense } from 'hono/jsx'
 import Counter from './counter'
 
 const app = new Hono()
